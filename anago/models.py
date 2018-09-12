@@ -102,11 +102,11 @@ class BiLSTMCRF(object):
                                         output_dim=self._char_embedding_dim,
                                         mask_zero=True,
                                         name='char_embedding')(char_ids)
-            char_embeddings = TimeDistributed(Bidirectional(CuDNNLSTM(self._char_lstm_size)))(char_embeddings)
+            char_embeddings = TimeDistributed(Bidirectional(LSTM(self._char_lstm_size)))(char_embeddings)
             word_embeddings = Concatenate()([word_embeddings, char_embeddings])
 
         word_embeddings = Dropout(self._dropout)(word_embeddings)
-        z = Bidirectional(CuDNNLSTM(units=self._word_lstm_size, return_sequences=True))(word_embeddings)
+        z = Bidirectional(LSTM(units=self._word_lstm_size, return_sequences=True))(word_embeddings)
         z = Dense(self._fc_dim, activation='tanh')(z)
 
         if self._use_crf:

@@ -80,12 +80,6 @@ class Sequence(object):
         model, loss = model.build()
         model.compile(loss=loss, optimizer=self.optimizer)
 
-        trainer = Trainer(model, preprocessor=p)
-        trainer.train(x_train, y_train, x_valid, y_valid,
-                      epochs=epochs, batch_size=batch_size,
-                      verbose=verbose, callbacks=callbacks,
-                      shuffle=shuffle)
-
         self.p = p
         self.model = model
 
