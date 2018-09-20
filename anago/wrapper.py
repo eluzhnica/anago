@@ -79,7 +79,7 @@ class Sequence(object):
                           use_crf=self.use_crf)
         model, loss = model.build()
         from keras.utils import multi_gpu_model
-        model = multi_gpu_model(model)
+        model = multi_gpu_model(model, 8)
         model.compile(loss=loss, optimizer=self.optimizer)
 
         self.p = p
